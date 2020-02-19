@@ -11,7 +11,7 @@ from .exceptions import HermesInvalidMessageType
 class Hermes(object):
     def __init__(self, slack_token, channel):
         """Hermes builder, who will establish some important connections with Slack
-        
+
         Parameters
         ----------
         slack_token : str
@@ -54,8 +54,8 @@ class Hermes(object):
             Template with the chosen message type
         """
         options = {
-            "INFO": "**INFO:** ",
-            "ERROR": "**ERROR:** ",
+            "INFO": ":information_source: *There is a notification:*",
+            "ERROR": ":x: *There is an error:*",
         }
         try:
             selected_option = options[message_type.upper()]
@@ -73,7 +73,7 @@ class Hermes(object):
         message : str
             Message informed by the service using Hermes, which may be
             end-of-processing messages, errors, etc.
-        message_type : str, optional
+        message_type : str
             Choose the type of message to be sent, which can be INFO or ERROR.
 
         Returns
@@ -83,15 +83,23 @@ class Hermes(object):
             find which machine the service is running on, ready to be sent to Slack
         """
         os_informations = self._get_os_informations()
-        base_message = (
+        os_informations_message = (
             f"[{os_informations['current_datetime']}] - "
             f"{os_informations['dist']}, "
-            f"{os_informations['system']}, "
+            f"{os_informations['system']} "
             f"{os_informations['machine']}, "
-            f"User: {os_informations['user']} => "
+            f"User: {os_informations['user']}"
         )
         message_type = self.choose_message_type(message_type)
-        return base_message + message_type + message
+
+        return [
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": os_informations_message},
+            },
+            {"type": "section", "text": {"type": "mrkdwn", "text": message_type}},
+            {"type": "section", "text": {"type": "mrkdwn", "text": f"> message"}},
+        ]
 
     def send_message(self, message, message_type="INFO"):
         """Send the message to Slack.
@@ -106,4 +114,4 @@ class Hermes(object):
             by default 'INFO'
         """
         formated_message = self.format_message(message, message_type)
-        self.client.chat_postMessage(channel=self.channel, text=formated_message)
+        self.client.chat_postMessage(channel=self.channel, blocks=formated_message)
