@@ -1,0 +1,2 @@
+class HermesInvalidMessageType(Exception):
+    pass
