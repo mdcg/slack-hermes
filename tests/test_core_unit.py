@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from src.core import Hermes
+from hermes.core import Hermes
 
 
 class HermesUnitTests(unittest.TestCase):
