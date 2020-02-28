@@ -34,7 +34,6 @@ class Hermes(object):
         """
         return {
             "user": getpass.getuser(),
-            "dist": " ".join(dist_info for dist_info in platform.dist()),
             "system": platform.system(),
             "machine": platform.machine(),
             "current_datetime": datetime.now().strftime(
@@ -88,7 +87,6 @@ class Hermes(object):
         os_informations = self._get_os_informations()
         os_informations_message = (
             f"[{os_informations['current_datetime']}] - "
-            f"{os_informations['dist']}, "
             f"{os_informations['system']} "
             f"{os_informations['machine']}, "
             f"User: {os_informations['user']}"
