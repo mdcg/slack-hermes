@@ -10,7 +10,7 @@ Hermes is a bot to help you send notifications to Slack channels. Basically it w
 
 Below is an example of how it is used:
 
-```python
+``` python
 import os
 from hermes import Hermes
 
@@ -24,12 +24,7 @@ hermes_bot.send_message(
 )
 ```
 
-If you check the channel `#hermes-notifier`, you will see the following message:
-
-<<IMG>>
-
 ## First steps
-
 
 Before installing Hermes, I strongly recommend that you read the following tutorial: [Create a Slack app](https://github.com/slackapi/python-slackclient/blob/master/tutorial/01-creating-the-slack-app.md).
 
@@ -37,16 +32,16 @@ You will need to perform some steps described in this tutorial for the full func
 
 Once you have set it up: 
 
-- Go to Slack;
-- create a channel (or if you prefer, use an existing one);
-- click on the gear icon located in the upper corner;
-- click on the option "add an app";
-- select the app you created;
-- VOILÀ!
+* Go to Slack; 
+* create a channel (or if you prefer, use an existing one); 
+* click on the gear icon located in the upper corner; 
+* click on the option "add an app"; 
+* select the app you created; 
+* VOILÀ!
 
 To check if everything went well, below is a small snippet:
 
-```python
+``` python
 from hermes import Hermes
 
 hermes_bot = Hermes(
@@ -65,7 +60,7 @@ hermes_bot.send_message(
 
 Use the package manager pip to install Hermes.
 
-```
+``` 
 pip install -e "git+git@github.com:mdcg/slack-hermes.git@master#egg=slack-hermes"
 ```
 
@@ -73,7 +68,7 @@ pip install -e "git+git@github.com:mdcg/slack-hermes.git@master#egg=slack-hermes
 
 There are currently only two types of messages that Hermes supports: Error messages and informational messages.
 
-```python
+``` python
 import os
 from hermes import Hermes
 
@@ -94,10 +89,6 @@ hermes_bot.send_message(
     message_type="error",
 )
 ```
-
-In the slack you will receive something like this:
-
-<<IMG>>
 
 *PS: If you pass a type that does not exist, exception `HermesInvalidMessageType` will be raised.*
 
